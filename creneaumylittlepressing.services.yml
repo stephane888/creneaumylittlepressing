@@ -1,0 +1,6 @@
+services:
+  creneaumylittlepressing.event_subscriber:
+    class: Drupal\creneaumylittlepressing\EventSubscriber\CreneaumylittlepressingSubscriber
+    arguments: ['@messenger']
+    tags:
+      - { name: event_subscriber }

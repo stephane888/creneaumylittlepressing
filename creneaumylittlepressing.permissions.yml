@@ -1,0 +1,4 @@
+administer creneaumylittlepressing configuration:
+  title: 'Administer creneaumylittlepressing configuration'
+  description: 'Optional description.'
+  restrict access: true

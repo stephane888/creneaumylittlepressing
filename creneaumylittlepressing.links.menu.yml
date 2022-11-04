@@ -1,0 +1,6 @@
+creneaumylittlepressing.settings_form:
+  title: 'creneaumylittlepressing'
+  description: 'Configure creneaumylittlepressing.'
+  parent: system.admin_config_system
+  route_name: creneaumylittlepressing.settings_form
+  weight: 10

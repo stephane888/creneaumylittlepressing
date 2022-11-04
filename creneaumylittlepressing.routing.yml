@@ -1,0 +1,31 @@
+creneaumylittlepressing.shopify:
+  path: '/app/creneaux/shopify'
+  defaults:
+    _title: 'Example'
+    _controller: '\Drupal\creneaumylittlepressing\Controller\CreneaumylittlepressingController::shopify'
+  requirements:
+    _permission: 'access content'
+    
+creneaumylittlepressing.app:
+  path: '/creneaux-mylittlepressing/app'
+  defaults:
+    _title: 'Example'
+    _controller: '\Drupal\creneaumylittlepressing\Controller\CreneaumylittlepressingController::AppCreneaux'
+  requirements:
+    _permission: 'access content'
+    
+creneaumylittlepressing.permissions:
+  path: '/app/creneaux/shopify/valid-permissions'
+  defaults:
+    _title: 'Example'
+    _controller: '\Drupal\creneaumylittlepressing\Controller\CreneaumylittlepressingController::Valid'
+  requirements:
+    _permission: 'access content'
+
+creneaumylittlepressing.settings_form:
+  path: '/admin/config/system/creneaumylittlepressing'
+  defaults:
+    _title: 'creneaumylittlepressing settings'
+    _form: 'Drupal\creneaumylittlepressing\Form\SettingsForm'
+  requirements:
+    _permission: 'administer creneaumylittlepressing configuration'
