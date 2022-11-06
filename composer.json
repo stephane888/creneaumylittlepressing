@@ -9,5 +9,7 @@
         }
     ],
     "minimum-stability": "dev",
-    "require": {}
+    "require": {
+        "stephane888/shopify_api_rest": "dev-1x"
+    }
 }

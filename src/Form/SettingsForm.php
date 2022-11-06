@@ -48,9 +48,9 @@ class SettingsForm extends ConfigFormBase {
       '#required' => true
     ];
     $form['grant_options'] = [
-      '#type' => 'select',
+      '#type' => 'checkboxes',
       '#title' => $this->t('select grant options'),
-      '#default_value' => $config->get('grant_options'),
+      '#default_value' => !empty($config->get('grant_options')) ? $config->get('grant_options') : [],
       '#options' => ShopifyApiRest::listGrantOption(),
       '#required' => true
     ];
