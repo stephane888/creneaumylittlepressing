@@ -1,6 +1,50 @@
 <?php
 
 /**
+ *
  * @file
- * Primary module hooks for creneaumylittlepressing module.
+ * Primary module hooks for Creneaux mylittlepressing module.
+ *
+ * @DCG
+ * This file is no longer required in Drupal 8.
+ * @see https://www.drupal.org/node/2217931
  */
+/**
+ * Implements hook_theme().
+ */
+function creneaumylittlepressing_theme() {
+  return [
+    'creneaumylittlepressing' => [
+      'render element' => 'children'
+    ]
+  ];
+}
+
+/**
+ *
+ * @param
+ *        $variables
+ */
+function creneaumylittlepressing_preprocess_page__creneaumylittlepressing(&$variables) {
+  $keys = [
+    '#sorted',
+    '#theme_wrappers',
+    '#region',
+    'attributes',
+    'wbu_entreprise_content' // doit etre en function du nom du theme actif.
+  ];
+  $content = $variables['page']['content'];
+  unset($variables['page']);
+  $variables['page']['content'] = $content;
+  $route_name = \Drupal::routeMatch()->getRouteName();
+  if ($route_name == "creneaumylittlepressing.app" || $route_name == "creneaumylittlepressing.permissions") {
+    if (isset($variables['page']['content'])) {
+      $blocks = $variables['page']['content'];
+      foreach ($blocks as $i => $value) {
+        if (!in_array($i, $keys)) {
+          unset($variables['page']['content'][$i]);
+        }
+      }
+    }
+  }
+}
