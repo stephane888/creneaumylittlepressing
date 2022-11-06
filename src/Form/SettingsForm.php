@@ -47,6 +47,12 @@ class SettingsForm extends ConfigFormBase {
       '#default_value' => $config->get('client_secret'),
       '#required' => true
     ];
+    $form['redirect_uri'] = [
+      '#type' => 'textfield',
+      '#title' => $this->t('Secret client'),
+      '#default_value' => $config->get('redirect_uri'),
+      '#required' => true
+    ];
     $form['grant_options'] = [
       '#type' => 'checkboxes',
       '#title' => $this->t('select grant options'),
@@ -78,6 +84,7 @@ class SettingsForm extends ConfigFormBase {
     //
     $editConfig->set('client_id', $form_state->getValue('client_id'));
     $editConfig->set('client_secret', $form_state->getValue('client_secret'));
+    $editConfig->set('redirect_uri', $form_state->getValue('redirect_uri'));
     $editConfig->set('grant_options', $form_state->getValue('grant_options'));
     $editConfig->save();
     //

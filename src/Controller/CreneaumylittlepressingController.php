@@ -50,6 +50,7 @@ class CreneaumylittlepressingController extends ControllerBase {
     $configs = $this->config('creneaumylittlepressing.settings')->getRawData();
     //
     $grantOptions = $configs['grant_options'];
+    $this->ManageAccessToken->setAppConfig($configs);
     $this->ManageAccessToken->run($Request, $grantOptions);
     $build['content'] = [
       '#theme' => 'Creneaumylittlepressing',
@@ -85,11 +86,12 @@ class CreneaumylittlepressingController extends ControllerBase {
    *
    * @return string[]|\Drupal\Core\StringTranslation\TranslatableMarkup[]
    */
-  public function Valid() {
-    $build['content'] = [
-      '#type' => 'item',
-      '#markup' => $this->t('It works!')
-    ];
+  public function Valid(Request $Request) {
+    $configs = $this->config('creneaumylittlepressing.settings')->getRawData();
+    $this->ManageAccessToken->setAppConfig($configs);
+    $grantOptions = $configs['grant_options'];
+    $this->ManageAccessToken->SaveAuthorization($Request, $grantOptions);
+    // redirection vers app.
     return $build;
   }
   
