@@ -30,3 +30,12 @@ creneaumylittlepressing.settings_form:
     _form: 'Drupal\creneaumylittlepressing\Form\SettingsForm'
   requirements:
     _permission: 'administer creneaumylittlepressing configuration'
+
+  
+creneaumylittlepressing.permissions.v2:
+  path: '/creneaux-mylittlepressing/permission'
+  defaults:
+    _title: 'Verification des permissions'
+    _controller: '\Drupal\creneaumylittlepressing\Controller\CreneaumylittlepressingController::ValidationPermissions'
+  requirements:
+    _permission: 'access content'

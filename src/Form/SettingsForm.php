@@ -49,7 +49,7 @@ class SettingsForm extends ConfigFormBase {
     ];
     $form['redirect_uri'] = [
       '#type' => 'textfield',
-      '#title' => $this->t('Secret client'),
+      '#title' => $this->t('redirect_uri'),
       '#default_value' => $config->get('redirect_uri'),
       '#required' => true
     ];

@@ -92,7 +92,15 @@ class CreneaumylittlepressingController extends ControllerBase {
     $grantOptions = $configs['grant_options'];
     $this->ManageAccessToken->SaveAuthorization($Request, $grantOptions);
     // redirection vers app.
-    return $build;
+    return $this->redirect('creneaumylittlepressing.app');
+  }
+  
+  public function ValidationPermissions(Request $Request) {
+    $configs = $this->config('creneaumylittlepressing.settings')->getRawData();
+    $this->ManageAccessToken->setAppConfig($configs);
+    $grantOptions = $configs['grant_options'];
+    $this->ManageAccessToken->SaveAuthorization($Request, $grantOptions);
+    return $this->redirect('creneaumylittlepressing.app');
   }
   
 }
