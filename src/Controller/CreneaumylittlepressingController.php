@@ -87,20 +87,29 @@ class CreneaumylittlepressingController extends ControllerBase {
    * @return string[]|\Drupal\Core\StringTranslation\TranslatableMarkup[]
    */
   public function Valid(Request $Request) {
+    $params = $Request->query->all();
     $configs = $this->config('creneaumylittlepressing.settings')->getRawData();
     $this->ManageAccessToken->setAppConfig($configs);
     $grantOptions = $configs['grant_options'];
     $this->ManageAccessToken->SaveAuthorization($Request, $grantOptions);
     // redirection vers app.
-    return $this->redirect('creneaumylittlepressing.app');
+    $options = [
+      'query' => $params
+    ];
+    return $this->redirect('creneaumylittlepressing.app', [], $options);
   }
   
   public function ValidationPermissions(Request $Request) {
+    $params = $Request->query->all();
     $configs = $this->config('creneaumylittlepressing.settings')->getRawData();
     $this->ManageAccessToken->setAppConfig($configs);
     $grantOptions = $configs['grant_options'];
     $this->ManageAccessToken->SaveAuthorization($Request, $grantOptions);
-    return $this->redirect('creneaumylittlepressing.app');
+    //
+    $options = [
+      'query' => $params
+    ];
+    return $this->redirect('creneaumylittlepressing.app', [], $options);
   }
   
 }
