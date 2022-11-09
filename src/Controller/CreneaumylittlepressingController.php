@@ -47,10 +47,11 @@ class CreneaumylittlepressingController extends ControllerBase {
    * code_autorisation.
    */
   public function AppCreneaux(Request $Request) {
+    $params = $Request->query->all();
     $configs = $this->config('creneaumylittlepressing.settings')->getRawData();
     //
     $grantOptions = $configs['grant_options'];
-    $this->ManageAccessToken->setAppConfig($configs);
+    $this->ManageAccessToken->setAppConfig($this->getMergeConf($configs, $params));
     $this->ManageAccessToken->run($Request, $grantOptions);
     $build['content'] = [
       '#theme' => 'Creneaumylittlepressing',
@@ -89,7 +90,7 @@ class CreneaumylittlepressingController extends ControllerBase {
   public function Valid(Request $Request) {
     $params = $Request->query->all();
     $configs = $this->config('creneaumylittlepressing.settings')->getRawData();
-    $this->ManageAccessToken->setAppConfig($configs);
+    $this->ManageAccessToken->setAppConfig($this->getMergeConf($configs, $params));
     $grantOptions = $configs['grant_options'];
     $this->ManageAccessToken->SaveAuthorization($Request, $grantOptions);
     // redirection vers app.
@@ -102,7 +103,7 @@ class CreneaumylittlepressingController extends ControllerBase {
   public function ValidationPermissions(Request $Request) {
     $params = $Request->query->all();
     $configs = $this->config('creneaumylittlepressing.settings')->getRawData();
-    $this->ManageAccessToken->setAppConfig($configs);
+    $this->ManageAccessToken->setAppConfig($this->getMergeConf($configs, $params));
     $grantOptions = $configs['grant_options'];
     $this->ManageAccessToken->SaveAuthorization($Request, $grantOptions);
     //
@@ -110,6 +111,16 @@ class CreneaumylittlepressingController extends ControllerBase {
       'query' => $params
     ];
     return $this->redirect('creneaumylittlepressing.app', [], $options);
+  }
+  
+  /**
+   * --
+   */
+  protected function getMergeConf($configs, $params) {
+    foreach ($params as $k => $value) {
+      $configs[$k] = $value;
+    }
+    return $configs;
   }
   
 }
