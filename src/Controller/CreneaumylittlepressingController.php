@@ -52,7 +52,7 @@ class CreneaumylittlepressingController extends ControllerBase {
     //
     $grantOptions = $configs['grant_options'];
     $this->ManageAccessToken->setAppConfig($this->getMergeConf($configs, $params));
-    // $this->ManageAccessToken->run($Request, $grantOptions);
+    $this->ManageAccessToken->run($Request, $grantOptions);
     $build['content'] = [
       '#theme' => 'creneaumylittlepressing',
       '#title' => "Configuration de lapplication creneau",
