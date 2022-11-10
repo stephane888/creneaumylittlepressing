@@ -39,7 +39,7 @@ jquery-labelauty:
 # Third-party library (CDN).
 vuejs:
   remote: https://vuejs.org
-  version: 2.6.12
+  version: 2.7.13
   license:
     name: MIT
     url: https://github.com/vuejs/vue/blob/dev/LICENSE
