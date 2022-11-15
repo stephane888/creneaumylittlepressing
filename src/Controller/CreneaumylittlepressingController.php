@@ -6,6 +6,9 @@ use Drupal\Core\Controller\ControllerBase;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Drupal\shopify_api_rest\Services\ManageAccessToken;
 use Symfony\Component\HttpFoundation\Request;
+use Drupal\Component\Serialization\Json;
+use Stephane888\DrupalUtility\HttpResponse;
+use Stephane888\Debug\ExceptionExtractMessage;
 
 /**
  * Returns responses for creneaumylittlepressing routes.
@@ -111,6 +114,27 @@ class CreneaumylittlepressingController extends ControllerBase {
       'query' => $params
     ];
     return $this->redirect('creneaumylittlepressing.app', [], $options);
+  }
+  
+  public function SaveMetafields(Request $Request) {
+    try {
+      $params = $Request->query->all();
+      $configs = $this->config('creneaumylittlepressing.settings')->getRawData();
+      $token = $this->ManageAccessToken->getToken($Request);
+      if (empty($token))
+        throw new \Exception("Token non definit");
+      $configs['token'] = $token;
+      //
+      $datas = Json::decode($Request->getContent());
+      $results = $this->ManageAccessToken->saveMetafields($datas['endPoint'], $datas['metafields'], $this->getMergeConf($configs, $params));
+      return HttpResponse::response($results);
+    }
+    catch (\Exception $e) {
+      return HttpResponse::response(ExceptionExtractMessage::errorAll($e), 400, $e->getMessage());
+    }
+    catch (\Error $e) {
+      return HttpResponse::response(ExceptionExtractMessage::errorAll($e), 400, $e->getMessage());
+    }
   }
   
   /**

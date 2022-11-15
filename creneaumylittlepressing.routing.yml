@@ -15,6 +15,15 @@ creneaumylittlepressing.app:
   requirements:
     _permission: 'access content'
     
+    
+creneaumylittlepressing.save_metafields:
+  path: '/creneaux-mylittlepressing/save-metafields'
+  defaults:
+    _title: "Configuration de l'application creneau"
+    _controller: '\Drupal\creneaumylittlepressing\Controller\CreneaumylittlepressingController::SaveMetafields'
+  requirements:
+    _permission: 'access content'
+    
 creneaumylittlepressing.permissions:
   path: '/app/creneaux/shopify/valid-permissions'
   defaults:
