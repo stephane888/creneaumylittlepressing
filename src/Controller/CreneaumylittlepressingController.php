@@ -9,6 +9,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Drupal\Component\Serialization\Json;
 use Stephane888\DrupalUtility\HttpResponse;
 use Stephane888\Debug\ExceptionExtractMessage;
+use Stephane888\Debug\ExceptionDebug;
 
 /**
  * Returns responses for creneaumylittlepressing routes.
@@ -128,6 +129,13 @@ class CreneaumylittlepressingController extends ControllerBase {
       $datas = Json::decode($Request->getContent());
       $results = $this->ManageAccessToken->saveMetafields($datas['endPoint'], $datas['metafields'], $this->getMergeConf($configs, $params));
       return HttpResponse::response($results);
+    }
+    catch (ExceptionDebug $e) {
+      $dbg = [
+        'debug' => $e->getContentToDebug(),
+        'errors' => ExceptionExtractMessage::errorAll($e)
+      ];
+      return HttpResponse::response($dbg, $e->getErrorCode(), $e->getMessage());
     }
     catch (\Exception $e) {
       return HttpResponse::response(ExceptionExtractMessage::errorAll($e), 400, $e->getMessage());
