@@ -117,6 +117,43 @@ class CreneaumylittlepressingController extends ControllerBase {
     return $this->redirect('creneaumylittlepressing.app', [], $options);
   }
   
+  /**
+   * --
+   */
+  public function LoadMetafields(Request $Request) {
+    try {
+      $params = $Request->query->all();
+      $configs = $this->config('creneaumylittlepressing.settings')->getRawData();
+      $token = $this->ManageAccessToken->getToken($Request);
+      if (empty($token))
+        throw new \Exception("Token non definit");
+      $configs['token'] = $token;
+      //
+      $datas = Json::decode($Request->getContent());
+      $results = $this->ManageAccessToken->loadMetafields($datas['endPoint'], $datas['metafields'], $this->getMergeConf($configs, $params));
+      return HttpResponse::response($results);
+    }
+    catch (ExceptionDebug $e) {
+      $dbg = [
+        'debug' => $e->getContentToDebug(),
+        'errors' => ExceptionExtractMessage::errorAll($e)
+      ];
+      return HttpResponse::response($dbg, $e->getErrorCode(), $e->getMessage());
+    }
+    catch (\Exception $e) {
+      return HttpResponse::response(ExceptionExtractMessage::errorAll($e), 400, $e->getMessage());
+    }
+    catch (\Error $e) {
+      return HttpResponse::response(ExceptionExtractMessage::errorAll($e), 400, $e->getMessage());
+    }
+  }
+  
+  /**
+   *
+   * @param Request $Request
+   * @throws \Exception
+   * @return \Symfony\Component\HttpFoundation\JsonResponse
+   */
   public function SaveMetafields(Request $Request) {
     try {
       $params = $Request->query->all();
@@ -143,6 +180,21 @@ class CreneaumylittlepressingController extends ControllerBase {
     catch (\Error $e) {
       return HttpResponse::response(ExceptionExtractMessage::errorAll($e), 400, $e->getMessage());
     }
+  }
+  
+  /**
+   *
+   * @param Request $Request
+   * @throws \Exception
+   * @return array|number|mixed|\Drupal\Component\Render\MarkupInterface|string
+   */
+  protected function getConfig(Request $Request) {
+    $configs = $this->config('creneaumylittlepressing.settings')->getRawData();
+    $token = $this->ManageAccessToken->getToken($Request);
+    if (empty($token))
+      throw new \Exception("Token non definit");
+    $configs['token'] = $token;
+    return $configs;
   }
   
   /**

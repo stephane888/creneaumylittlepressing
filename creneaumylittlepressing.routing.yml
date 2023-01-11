@@ -15,6 +15,14 @@ creneaumylittlepressing.app:
   requirements:
     _permission: 'access content'
     
+
+creneaumylittlepressing.load_metafields:
+  path: '/creneaux-mylittlepressing/load-configs'
+  defaults:
+    _title: "Configuration de l'application creneau"
+    _controller: '\Drupal\creneaumylittlepressing\Controller\CreneaumylittlepressingController::LoadMetafields'
+  requirements:
+    _permission: 'access content'
     
 creneaumylittlepressing.save_metafields:
   path: '/creneaux-mylittlepressing/save-metafields'
